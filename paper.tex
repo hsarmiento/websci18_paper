@@ -70,7 +70,7 @@
    \country{Chile}}
 \email{bpoblete@dcc.uchile.cl}
 
-\author{Sergio Campos}
+\author{Jaime Campos}
 %\authornote{This author is the
  % one who did all the really hard work.}
 \affiliation{%
@@ -191,7 +191,7 @@ Based on the works presented by \citeauthor{guzman2013line} \cite{guzman2013line
 
 Our focus in this proposal is to detect an emergency situation based on identifying anomalies in social media activity related to locations. In this way, the main task is to extract locations from messages by reducing the noise and irrelevant information. For this reason, data is pre-processed to allow a better analysis.
 
-For location extraction, we used a geographical dictionary (also known as gazetteer) to create a geographic hierarchy for a specific country. To understand the effect of an emergency situation inside to the country, we created signals in different levels of the geographic hierarchy and the tweet metadata. Afterwards, signals are divided into fixed time-windows and non textual features are computed for each of these. Finally and with the goals of filtering false positives detection, we created a geographic spread based on the proximity between locations by using an adjacency matrix.
+For location extraction task, we used a geographical dictionary (also known as gazetteer) to create a geographic hierarchy for a specific country. To understand the effect of an emergency situation inside to the country, we created signals in different levels of the geographic hierarchy and the tweet metadata. Afterwards, signals are divided into fixed time-windows and non textual features are computed for each of these. Finally and with the goals of filtering false positives detection, we created a geographic spread based on the proximity between locations by using an adjacency matrix.
 
 
 In order to provide a complete coverage of location-based detection of emergency situations, we divided our approach into four stages (depicted in the ``data process'' module in Figure \ref{fig:diagram}). Next, we describe each stage:
@@ -232,7 +232,7 @@ Considering the aforementioned geographical hierarchy, we extract locations from
 
 In this way, mixing geographical hierarchy and locations in microblog metadata, we create $NxM$ signals where $N$ is the number of locations obtained by gazetteer tree and $M$ is the number of metadata-levels extracted from the tweet object. For instance, we create a signal for \textit{city:Manchester} and we find this hierarchy in \textit{metadata:Tweet text} and also in \textit{metadata:User location}. That means that we track the mention of \textit{city:Manchester} at the level of the body of message and at the level of the location of the user profile individually.
 
-\subsection{Time-Windows}
+\subsection{Time-Window}
 In this stage we address the problems of how to divide and determine the time-window size to detect a new emergency situation and what features by the time-window allow it.
 
 \subsubsection{Determining Optimal Window Size}
@@ -271,30 +271,31 @@ To quantify a high-frequency in very small values of $d_{i}$, we compute the mea
 An emergency situation that affects and mobilizes response in a small area is defined as \textit{focalized}, while a disaster with a large geographic impact is defined as \textit{diffused} \cite{olteanu2015expect}. Using this definition, we extend this concept to represent neighborhoods between locations obtained from section \ref{sssec:geohie}. For that purpose, we create an \textit{adjacency matrix} $M$, where $M_{i,j} = 1$ represents if two locations are geographically connected and $M_{i,j} = 0$ if they are not connected. For instance, if an event is diffused (e.g., earthquake), the detection should be in adjacent-locations independently of metadata-level. On the other hand, if an event is focalized (e.g., terrorist attack), just one location should be detected but in different metadata-levels simultaneously.
 
 
-\begin{table}
-	\caption{List of earthquakes studied as ground truth, sorted by date.}
-	\label{tab:eqs}
-	\begin{tabular}{lccl}
-		\toprule
-		Country&Datetime (UTC)&Magnitude (Mw)& Language\\
-		\midrule
-		Italy & 2016-10-26 17:10:36 & 5.5 & Italian \\
-		Italy & 2016-10-30 06:40:17 & 6.6 & Italian\\
-		Chile & 2016-12-25 14:22:26 & 7.6 & Spanish\\
-		Chile & 2017-04-23 02:36:06 & 5.9 & Spanish\\
-		Chile & 2017-04-24 21:38:28 & 6.9 & Spanish\\
-		\midrule
-		%\bottomrule
-	\end{tabular}
-\end{table}
-
 \section{Experimental Analysis}
 
-Our experiments aim to find empirical evidences that allow detecting an emergency situation using the locations for a specific country in different levels of the geographic hierarchy and the tweet metadata. Thus, we construct our ground truth based on two publicly available earthquake catalogs and apply the proposal presented in the above section. 
+Our experiments aim to find empirical evidences that allow detecting an emergency situation. Thereby, we use the locations for a specific country in different levels of the geographic hierarchy and the tweet metadata. We construct our ground truth based on two publicly available earthquake catalogs and apply the proposal presented in the above section. Thereafter, we study the performance of our methodology mainly based on the concept of affected adjacent locations during an emergency situations.
 
 \subsection{Dataset Description}
 
 We collect data from Twitter Public Streaming API, which allows access to subsets equal to $1\%$ of public status descriptions in real-time. With this tool, we can retrieve either messages using a set of keywords or messages from specific locations setting a bounding box. In our approach, we get entire subsets of messages without use keywords or specific locations. Then, we retrieve random messages about any topic and any place in the world.
+ 
+ \begin{table}
+ 	\caption{List of earthquakes studied as ground truth, sorted by date.}
+ 	\label{tab:eqs}
+ 	\begin{tabular}{lccl}
+ 		\toprule
+ 		Country&Datetime (UTC)&Magnitude (Mw)& Language\\
+ 		\midrule
+ 		Italy & 2016-10-26 17:10:36 & 5.5 & Italian \\
+ 		Italy & 2016-10-30 06:40:17 & 6.6 & Italian\\
+ 		Chile & 2016-12-25 14:22:26 & 7.6 & Spanish\\
+ 		Chile & 2017-04-23 02:36:06 & 5.9 & Spanish\\
+ 		Chile & 2017-04-24 21:38:28 & 6.9 & Spanish\\
+ 		\midrule
+ 		%\bottomrule
+ 	\end{tabular}
+ \end{table}
+ 
  
 \subsection{Ground Truth}
 
@@ -345,6 +346,8 @@ National Institute of Geophysics and Volcanology in Italy\footnote{http://www.in
 
 
 \subsection{Methodology}\label{sec:methodology}
+
+According to the ``data classification'' module (Figure \ref{fig:diagram}), we first train a classifier to identify emergency events. Also, we introduce the hierarchy dependence to understand the local and national impact when an high-impact real-world event occurs. Besides, diffused and focalized events are identified with the goal of filtering false positives detections.
 
 Our filtering task can be seen as binary classification task. The positive class (\textit{detection label}) corresponds to messages related to instantaneous emergency situations, while the negative class (\textit{nothing label}) corresponds to the remaining or non-related to crisis situations.
 
@@ -447,7 +450,7 @@ On the other hand, \textit{Country(3)-State with G.S.} represent the detection w
 
 \section{Results}
 
-In this section we present an evaluation of our methodology for emergency situation detection. We evaluate our method using different events that occurred in England related to terrorist attack and non emergency situations. In this way, our main goal is to detect emergency events in non labeled data and reduce (as much as possible) the false positives detections. For these tasks, we use the analysis with the best performance presented in the Section \ref{sec:methodology}.
+In this section we present an evaluation of our methodology for emergency situation detection. We evaluate our method using different events occurred in England related to terrorist attacks and non emergency situations. In this way, our main goal is to detect emergency events in non labeled data and reduce (as much as possible) the false positives detections. For these tasks, we use the analysis with the best performance presented in the Section \ref{sec:methodology}.
 
 
 \subsection{Online Evaluation}
@@ -473,7 +476,7 @@ On the other hand, the second evaluation \textit{Country(3)-State with G.S.} dec
 
 \section{Discussion}
 
-Our findings suggest that there is evidence to detect an emergency situation based on anomaly frequency of messages that contain locations for a specific country. Indeed, our method based on the number of metadata-levels by country hierarchy and geographic spread by state, detects a $80\%$ of the events related to emergency situations as we could demonstrate in our ground truth. Also, our method is independent of the textual features because we apply the model over different languages as Spanish, Italian and English. Furthermore, we test our model in different types of events such as earthquakes and terrorist attacks, and also on different magnitudes (in the case of earthquakes) and number of affected people (e.g., \textit{Manchester Terrorist Attack} vs \textit{Westminster Terrorist Attack}).
+Our findings suggest that there is evidence to detect an emergency situation based on anomaly frequency of messages that contain locations for a specific country. Indeed, our method based on the number of metadata-levels by country hierarchy and geographic spread by state, detects a $80\%$ of the events related to emergency situations as we could demonstrate in our ground truth. Also, our method is independent of the textual features because we apply the model over different languages as Spanish, Italian and English. Furthermore, we test our model in different types of events such as earthquakes (EQ) and terrorist attacks (TA), and also on different magnitudes (in the case of earthquakes) and number of affected people (e.g., \textit{Manchester Terrorist Attack} vs \textit{Westminster Terrorist Attack}).
 
 However, when we apply our method in the on-line evaluation, we detect $66\%$ of the emergency situations that affected England. This explains that the signals, and for various reasons: the number of active users in United Kingdom\footnote{http://www.statista.com/statistics/242606/number-of-active-twitter-users-in-selected-countries/ visited on January 2018} which can affect the anomaly frequency of the messages since there exists a high daily average activity of the messages; similar locations in other countries (York $\approx$ New York); and soccer teams with names of cities (Manchester United, Liverpool). These issues also can affect the number of false positive detection in which in the case of England was $30\%$ of the non-related to emergency events.
 
