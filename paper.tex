@@ -2,6 +2,7 @@
 
 \usepackage{booktabs} % For formal tables
 \usepackage{array,multirow}
+\usepackage{todonotes}
 % Copyright
 %\setcopyright{none}
 %\setcopyright{acmcopyright}
@@ -16,10 +17,10 @@
 %\doublespacing
 
 % DOI
-\acmDOI{10.475/123_4}
+%\acmDOI{10.475/123_4}
 
 % ISBN
-\acmISBN{123-4567-24-567/08/06}
+%\acmISBN{123-4567-24-567/08/06}
 
 %Conference
 %\acmConference[WOODSTOCK'97]{ACM Woodstock conference}{July 1997}{El Paso, Texas USA} 
@@ -55,7 +56,7 @@
 %\authornote{Dr.~Trovato insisted his name be first.}
 %\orcid{1234-5678-9012}
 \affiliation{%
-  \institution{Department of Computer Science, University of Chile}
+  \institution{Department of Computer Science \\ University of Chile}
   \streetaddress{P.O. Box 1212}
    \city{Santiago} 
    \country{Chile}}
@@ -64,7 +65,7 @@
 \author{Barbara Poblete}
 %\authornote{The secretary disavows any knowledge of this author's actions.}
 \affiliation{%
-  \institution{Department of Computer Science, University of Chile}
+  \institution{Department of Computer Science \\ University of Chile}
   \streetaddress{P.O. Box 1212}
    \city{Santiago} 
    \country{Chile}}
@@ -74,7 +75,7 @@
 %\authornote{This author is the
  % one who did all the really hard work.}
 \affiliation{%
-  \institution{Department of Geophysics, University of Chile}
+  \institution{Department of Geophysics \\ University of Chile}
 %  \streetaddress{1 Th{\o}rv{\"a}ld Circle}
   \city{Santiago} 
   \country{Chile}}
@@ -132,7 +133,16 @@ Our findings indicate that anomalies in location-related social media user activ
 \ccsdesc[500]{Information systems~Data stream mining}
 \ccsdesc[300]{Information systems~Spatial-temporal systems}
 
-\keywords{Emergency Situations, Citizen Sensors, Social Media}
+\keywords{Emergency Situations; Citizen Sensors; Social Media}
+
+\copyrightyear{2018} 
+\acmYear{2018} 
+\setcopyright{acmlicensed}
+\acmConference[WebSci'18]{10th ACM Conference on Web Science}{May 27--30, 2018}{Amsterdam, Netherlands}
+\acmBooktitle{WebSci'18: 10th ACM Conference on Web Science, May 27--30, 2018, Amsterdam, Netherlands}
+\acmPrice{15.00}
+\acmDOI{10.1145/3201064.3201077}
+\acmISBN{978-1-4503-5563-6/18/05}
 
 
 \maketitle
@@ -140,7 +150,7 @@ Our findings indicate that anomalies in location-related social media user activ
 \section{Introduction}
 Social media has become a major communication channel during high-impact real-world events, such as elections, sports events, emergency situations, among others. In each case, users act as ``citizen sensors'' sharing and posting their mood, opinion, photos, videos and geographical points of interest.
 
-During emergency situations, traditional media may suffer infrastructure issues and real-time communications could be disrupted. Instead, microblogging has played a critical role over the last fifteen years allowing users to share real-time information from people local to the incident, such as status updates, casualties, damages and alerts \cite{kumar2011tweettracker,imran2013extracting,stowe2016identifying,reuterfifteen}. For this reason, researchers have studied user behavior during these events to detect, summarize and classify messages with the goal of helping authorities, and the general public, with situational awareness to provide fast and conscientious responses during crisis situations.
+\todo{definicion}  \textcolor{red}{According to United Nations Department of Humanitarian Affairs \cite{dha1992internationally}, an emergency situation can be defined as ``a sudden and usually unforeseen event that calls for immediate measures to minimize its adverse consequences''}. During these events, traditional media may suffer infrastructure issues and real-time communications could be disrupted. Instead, microblogging has played a critical role over the last fifteen years allowing users to share real-time information from people local to the incident, such as status updates, casualties, damages and alerts \cite{kumar2011tweettracker,imran2013extracting,stowe2016identifying,reuterfifteen}. For this reason, researchers have studied user behavior during these events to detect, summarize and classify messages with the goal of helping authorities, and the general public, with situational awareness to provide fast and conscientious responses during crisis situations.
 
 Twitter is a microblogging platform that allows users to share short messages (called \textit{tweets}) and is currently used worldwide by over $300$ million people.\footnote{http://www.statista.com/statistics/282087/number-of-monthly-active-twitter-users/} About $80\%$ of Twitter users access from mobile devices, which contributes to the immediacy of diffusion of information, especially during crisis situations \cite{castillo2016big}. One of the most important tasks during these situations, is to timely detect incoming real-world events. This is because, as with most social media conversations, messages are often overridden with irrelevant and redundant noise. In current works \cite{kumar2011tweettracker,caragea2011classifying,imranaidr2014,maldonado2017}, these tasks are solved with methods that rely on keyword based filters on the \textit{Twitter Public Streaming API}.\footnote{https://developer.twitter.com/en/docs/tweets/filter-realtime/overview} However, a drawback of keyword-based methods is that they require to train for each specific domain, and for different type of events. For instance, \citeauthor{olteanu2014} \cite{olteanu2014} generated a set of keywords for event detection based on different datasets. However, these keywords are not sufficient for cases in which specific, and previously unseen, terms arise for particular events (e.g., the hashtags: \textit{\#eqnz}, used for Earthquakes in New Zealand, and \textit{\#pabloph}, used for Typhoon Pablo in Philippines) \cite{potts2011tweeting,bruns2012local,karimi2013classifying}. Furthermore, domain-specific keywords are commonly extracted using a particular language and do not apply to others.
 
@@ -148,9 +158,11 @@ In addition, prior work related to crisis situations in social media, show a str
 
 In order to complement prior findings, we propose to address the following research question: \textit{Can we detect automatically emergency situations, based solely on location-related information found in user messages?}.
 
-We propose a method based on recurring references to country-level locations in message metadata. For this task, we create a gazetteer tree based on the hierarchy of the specific country, divide the messages into fixed time-windows and compute the frequency and the probability distributions of the interarrival time of the messages for each geographical hierarchy. To detect an emergency situation, we train a SVM classifier in each hierarchy and apply a geographic spread to filter false positives detection considering that an emergency situation can be either \textit{focalized} (i.e., that affects a reduced area) or \textit{diffused} (i.e., that affects a large area).
+We propose a method based on recurring references to country-level locations in message metadata. For this task, we create a gazetteer tree based on the hierarchy of the specific country, divide the messages into fixed time-windows and compute the frequency and the probability distributions of the interarrival time of the messages for each geographical hierarchy. To detect an emergency situation, we train a SVM classifier in each hierarchy and apply a geographic spread to filter false positives detection considering that an emergency situation can be either \textit{focalized} (i.e., that affects a reduced area) or \textit{diffused} (i.e., that affects a large area). 
 
-Our main contribution is to create a methodology that detects instantaneous emergency situations just by using the location related information for a specific country. Furthermore, our approach does not depend on language to detect a new event since it does not use textual features as input. In addition, we characterize focalized and diffused crisis situations.
+Our main contribution is to create a methodology that detects instantaneous emergency situations just by using the location related information for a specific country. \textcolor{red}{Since an emergency situation is a high-impact real-world event, we use locations in different levels of geographic hierarchies for detecting anomalies in the lowest levels (as cities or states) and the highest levels (a country) at the same time} \todo{uso de localidades}.Furthermore, our approach does not depend on language to detect a new event since it does not use textual features as input. In addition, we characterize focalized and diffused crisis situations.
+
+\todo{sobre el baseline}\textcolor{red}{To validate our hypothesis, we create a ground truth based on random messages retrieving from Twitter Public Stream without specific keywords and geolocations. In contrast to previous works where they retrieve messages for a specific domain and type of crisis events, we get domain-independent messages to find and demonstrate our hypothesis that an anomaly in the activity related to locations can detect an emergency situation. Hence, we do not compare our detection method with others because they are centered in tracking specific crisis events. Besides, there are no jobs with independent domain to use as baseline related to emergency situations.}
 
 The paper is organized as follows: we first introduce an overview of relevant literature related to emergency situation and event detection in social media. Next we present a complete description of our proposal. Then, we provide a full description of our dataset and later we summarize our experimental validation over the ground truth and on-line evaluation. Finally, we deliver our discussions, conclusions and future work.
 
@@ -216,7 +228,14 @@ We create a set of discrete-time signals for each location, which indicates each
 %The problems that we address in this stage are how to infer locations from microblog messages to track signals over time in the data stream and what is the lowest hierarchy level to find and assign to these signals.
 
 \subsubsection{Geographical Hierarchy}\label{sssec:geohie}
-We use the idea of \textit{gazetteer as a tree} presented in \cite{yin2014pinpointing} in which each place is associated with a canonical taxonomy node. We create our gazetteer tree based on Geonames\footnote{http://download.geonames.org/export/dump/} and Wikipedia\footnote{http://www.wikipedia.org/}. However, in \cite{yin2014pinpointing} the gazetteer hierarchy presents four levels where the lowest level represents a specific point of interest. In our approach, we use a subset of the gazetteer hierarchy with only three levels: {\em city}, {\em state} and {\em country}. We do so because a large amount of users specify their location down to city level \cite{hecht2011tweets}. For example, if we have the \textit{city:Manchester}, we associate this location with \textit{region-state:North West} and also with \textit{country:England}. As indicated in our data pre-processing stage, we consider only locations in the native language of the country. For instance, in the case of Italy locations, we consider \textit{Roma} and not \textit{Rome}.
+We use the idea of \textit{gazetteer as a tree} presented in \cite{yin2014pinpointing} in which each place is associated with a canonical taxonomy node. We create our gazetteer tree based on Geonames\footnote{http://download.geonames.org/export/dump/} and Wikipedia\footnote{http://www.wikipedia.org/}. However, in \cite{yin2014pinpointing} the gazetteer hierarchy presents four levels where the lowest level represents a specific point of interest. In our approach, we use a subset of the gazetteer hierarchy with only three levels: {\em city}, {\em state} and {\em country}. We do so because a large amount of users specify their location down to city level \cite{hecht2011tweets}. For example, if we have the \textit{city:Manchester}, we associate this location with \textit{region-state:North West} and also with \textit{country:England}. As indicated in our data pre-processing stage, we consider only locations in the native language of the country. For instance, in the case of Italy locations, we consider \textit{Roma} and not \textit{Rome} (Figure \ref{fig:gazetteer}).
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\columnwidth]{img/gazetteer_example_paper2.png}
+	\caption{Example of gazetteer tree for Italy.}
+	\label{fig:gazetteer}
+\end{figure}
 
 \subsubsection{Location Extraction}
 
@@ -277,7 +296,7 @@ Our experiments aim to find empirical evidences that allow detecting an emergenc
 
 \subsection{Dataset Description}
 
-We collect data from Twitter Public Streaming API, which allows access to subsets equal to $1\%$ of public status descriptions in real-time. With this tool, we can retrieve either messages using a set of keywords or messages from specific locations setting a bounding box. In our approach, we get entire subsets of messages without use keywords or specific locations. Then, we retrieve random messages about any topic and any place in the world.
+We collect data from Twitter Public Streaming API, which allows access to subsets equal to $1\%$ of public status descriptions in real-time. With this tool, we can retrieve either messages using a set of keywords or messages from specific locations setting a bounding box. In our approach, we get entire subsets of messages without use of keywords or specific locations. Then, we retrieve random messages about any topic and any place in the world.
  
  \begin{table}
  	\caption{List of earthquakes studied as ground truth, sorted by date.}
@@ -299,12 +318,11 @@ We collect data from Twitter Public Streaming API, which allows access to subset
  
 \subsection{Ground Truth}
 
-We analyze five earthquakes with magnitudes between $5.5Mw$ and $7.6Mw$\footnote{Mw: the moment magnitude scale}, occurring in Italian-speaking and Spanish-speaking countries between October 2016 and April 2017 (Table \ref{tab:eqs}). For that purpose, we collect $20$ million of messages 12-hours before and after the emergency situation events. 
+\textcolor{red}{We choose earthquakes as crisis situation for our ground truth since that according to \citeauthor{carr1932disaster} \cite{carr1932disaster}, these events are also known as \textit{instantaneous-diffused} events. These events are characterized since that nobody could do anything about it and wrecked its effects on the entire community. This definition is relevant because an unexpected (or instantaneous) event generates an anomaly of frequency in the social media activity since that it disrupts the ``normal life'' of the users. Furthermore, diffused events affect a big portion of the users simultaneously generating a collective reaction in neighbors affected locations.} 
 
-According our proposal we create both the gazetteer hierarchies\footnote{http://users.dcc.uchile.cl/$\sim$hsarmien/gazetteer.html} for each country and construct the signals based on each hierarchy and metadata-level. As a result of the number of messages of each signal (Table \ref{tab:message_signal}), we discard all signals related to city hierarchy since a great amount of small cities have zero frequency in a normal situation unlike to capital or metropolitan cities.
+In this way, we analyze five earthquakes with magnitudes between $5.5Mw$ and $7.6Mw$\footnote{Mw: the moment magnitude scale}, occurring in Italian-speaking and Spanish-speaking countries between October 2016 and April 2017 (Table \ref{tab:eqs}). For that purpose, we collect $20$ million messages 12 hours before and after the emergency situation events. 
 
-
-
+According to our proposal we create both the gazetteer hierarchies\footnote{http://users.dcc.uchile.cl/$\sim$hsarmien/gazetteer.html} for each country and construct the signals based on each hierarchy and metadata-level. As a result of the number of messages of each signal (Table \ref{tab:message_signal}), we discard all signals related to city hierarchy since a great amount of small cities have zero frequency in a normal situation unlike to capital or metropolitan cities.
 
 \begin{table}
 	\caption{Number of messages by signal.}
@@ -332,14 +350,14 @@ According our proposal we create both the gazetteer hierarchies\footnote{http://
 
 \subsubsection{Labeled Emergency Situations}
 
-The exactly datetime event is obtained from National Seismology Agency in Chile\footnote{http://www.sismologia.cl/} and 
+The exact event datetime is obtained from National Seismology Agency in Chile\footnote{http://www.sismologia.cl/} and 
 National Institute of Geophysics and Volcanology in Italy\footnote{http://www.ingv.it/it/}. With the purpose of labeling a time-window as positive class (detection), we set as detection those time-windows with positive variation in frequency, skewness and kurtosis with respect to the normalization of the previous values. Moreover and according to (Figure \ref{fig:labeled}), we include the three next time-windows after the event to compensate the imbalance between classes given that after these number of time-windows, the variation in the features decrease.
 
 
 \begin{figure}
 	\centering
 	\includegraphics[width=\columnwidth]{img/labeled2.png}
-	\caption{Average variation in emergency situations between time-windows.}
+	\caption{Average variation in emergency situations between time-windows. \textcolor{red}{Positive and negatives values in x-axis represent the following and previous time-windows from the beginning of the event respectively.}}
 	\label{fig:labeled}
 \end{figure}
 
@@ -361,7 +379,7 @@ To classify messages we employed traditional binary classifier Support Vector Ma
 \end{figure}
 
 
-Given that an emergency situation is not an usual event, we have an highly unbalanced data respect to the classes after labeled ($1\approx2\%$ of positive class corresponding to \textit{detection}). Therefore, we used \textit{under-sampling} \cite{lunardon2014rose} over country and state datasets increasing our positive class to $15\approx18\%$. Additionally, to validate our model, we used \textit{5-fold cross-validation} where one earthquake dataset is used as testing and the remaining earthquakes dataset as training.
+Given that an emergency situation is not a usual event, we have an highly unbalanced data respect to the classes after labeled ($1\approx2\%$ of positive class corresponding to \textit{detection}). Therefore, we used \textit{under-sampling} \cite{lunardon2014rose} over country and state datasets increasing our positive class to $15\approx18\%$. Additionally, to validate our model, we used \textit{5-fold cross-validation} where one earthquake dataset is used as testing and the remaining earthquakes dataset as training.
 
 Table \ref{tab:perfomance} shows the average results of our model applying 5-fold cross validation. In order provide a extended analysis about incorrect labels and time-windows, we include the metric \textit{False Positive Rate (FPR).} 
 
@@ -400,7 +418,7 @@ Our second analysis considered the hierarchies as non-isolated detections. In th
 Our third analysis considered the hierarchies as non-isolated detections and applies the Geographic Spread (G.S.). Using the \textit{Adjacency Matrix} to represent neighborhoods between regions/states, we considered as a correct detection those time-windows where the state/s classified as detection are defined as \textit{Focalized} or \textit{Diffused} and exist dependency between hierarchies. 
 
 \begin{table*}
-	\caption{Online evaluation by time-windows (T-W) using Country(2)-State with G.S. method}
+	\caption{On-line evaluation of events occurred in England by time-windows (T-W) using Country(2)-State with G.S. method. The table shows the total number of detected time-windows, the number of detected time-windows before to the beginning and after to the end of the event. Last two columns show the detection delay time respect to the beginning of the event and the top 3 bigrams when the detection occurs.}
 	\label{tab:online1}
 	\begin{tabular}{lccccp{3.5cm}c}
 		\toprule
@@ -420,7 +438,7 @@ Our third analysis considered the hierarchies as non-isolated detections and app
 
 
 \begin{table*}
-	\caption{Online evaluation by time-windows (T-W) using Country(3)-State with G.S. method}
+	\caption{On-line evaluation of events occurred in England by time-windows (T-W) using Country(3)-State with G.S. method. The table shows the total number of detected time-windows, the number of detected time-windows before to the beginning and after to the end of the event. Last two columns show the detection delay time respect to the beginning of the event and the top 3 bigrams when the detection occurs.}
 	\label{tab:online2}
 	\begin{tabular}{lccccp{3.5cm}c}
 		\toprule
@@ -442,29 +460,37 @@ Our third analysis considered the hierarchies as non-isolated detections and app
 In addition to the results of the dependency analysis explained above, we see that a large amount of time-windows for country hierarchy ($\approx 82\%$) have more than one metadata-level when exist a correct detection. This can be explained since an emergency situation produce a collective reaction on the level of body of the message (\textit{tweet text}), users sharing any messages with profile location in a specific country (\textit{user location}) or mixing both concepts (\textit{tweet text - user location}).
 
 
-Considering the geographic spread by states and the number of metadata-levels by country hierarchy, we analysed the results shown on the bottom of the Table \ref{tab:perfomance}. On the one hand, the row with value equal to \textit{Country(2)-State with G.S.} represents the detection when we considered at least two metadata-levels for the country hierarchy and the geographic spread for states. In contrast to the the previous analyses, we improved the values of the Precision, F1 and FPR. The last metric is very important because there are no time-windows incorrectly assigned as emergency situations. Consequently, the Recall values decrease which means that our method remove some time-windows classified as detection. Beside the percent of emergency situations detected is equal to $100\%$ with a average delay equal to $10.4$ minutes ($min=6$, $max=14$) from the impact of the event to the first detection.
+Considering the geographic spread by states and the number of metadata-levels by country hierarchy, we analyzed the results shown on the bottom of the Table \ref{tab:perfomance}. On the one hand, the row with value equal to \textit{Country(2)-State with G.S.} represents the detection when we considered at least two metadata-levels for the country hierarchy and the geographic spread for states. In contrast to the the previous analyses, we improved the values of the Precision, F1 and FPR. The last metric is very important because there are no time-windows incorrectly assigned as emergency situations. Consequently, the Recall values decrease which means that our method remove some time-windows classified as detection. Beside the percent of emergency situations detected is equal to $100\%$ with an average delay equal to $10.4$ minutes ($min=6$, $max=14$) from the impact of the event to the first detection.
 
 
-On the other hand, \textit{Country(3)-State with G.S.} represent the detection when we considered three metadata-levels for country hierarchy and the geographic spread for states. Similar to  \textit{Country(2)-State with G.S.}, we improved the values of Precision, F1 and FPR but our recall decrease from $R = 0.58$ to $R = 0.47$, detecting  $80\%$ of the emergency situations with a average delay equal to $11.5$ minutes ($min=8$, $max=14$) from the impact of the event to the first detection.
+On the other hand, \textit{Country(3)-State with G.S.} represent the detection when we considered three metadata-levels for country hierarchy and the geographic spread for states. Similar to  \textit{Country(2)-State with G.S.}, we improved the values of Precision, F1 and FPR but our recall decrease from $R = 0.58$ to $R = 0.47$, detecting  $80\%$ of the emergency situations with an average delay equal to $11.5$ minutes ($min=8$, $max=14$) from the impact of the event to the first detection.
 
 
 \section{Results}
 
-In this section we present an evaluation of our methodology for emergency situation detection. We evaluate our method using different events occurred in England related to terrorist attacks and non emergency situations. In this way, our main goal is to detect emergency events in non labeled data and reduce (as much as possible) the false positives detections. For these tasks, we use the analysis with the best performance presented in the Section \ref{sec:methodology}.
+In this section, we present an on-line evaluation of our methodology for emergency situation detection. We identify several events occurred in England that includes emergency situations and non-emergency situations. In this way, our main goal is to detect emergency events in non labeled data and using a different language with respect to the languages used in our classifier. To reduce (as much as possible) the false positive detections, we use the analysis with the best performance presented in the Section \ref{sec:methodology}.
+
+%o reduce (as much as possible) the false positives detections. For these tasks, we use the analysis with the best performance presented in the Section \ref{sec:methodology}.
 
 
-\subsection{Online Evaluation}
-For our evaluation in the Twitter Public Stream, we trained classifier with five earthquakes identified in our ground truth. Furthermore, our evaluation dataset is formed by eight different events that occurred in England between December 2016 and October 2017. For each event we considered the full-day in which they ocurred. The main goals of this evaluation is to know the capacity of our method to detect emergency situations and discard those non-related to emergency events that involve location references. Geographic spread analysis is used to evaluate our method because decrease the number of false positives detection. In the same way of the experiments in Section \ref{sssec:geospreadanalysis}, we compare the results using the two presented methods respect to the number of metadata-levels by country hierarchy.
+%In this section we present an evaluation of our methodology for emergency situation detection. We evaluate our method using different events occurred in England related to terrorist attacks and non emergency situations. In this way, our main goal is to detect emergency events in non labeled data and reduce (as much as possible) the false positives detections. For these tasks, we use the analysis with the best performance presented in the Section \ref{sec:methodology}.
 
-As can be noted on Table \ref{tab:online1} and Table \ref{tab:online2}, we study three terrorist attacks and five high-impact real-world events related to soccer matches, music concerts and political elections. In the case of \textit{Premier League Soccer Matches} and \textit{U.K Elections}, we can not identify the beginning of the event, since in the first one there are many soccer matches during the analyzed day and in the second one there is no a specific start time. In order to know the topics when our method detects an event, we computed the Top 3 Bigrams in the detected time-windows. Also, we calculated the delay time just for emergency events.
+
+\subsection{On-line Evaluation}
+For our evaluation in the Twitter Public Stream, we trained a classifier with five earthquakes identified in our ground truth. Furthermore, our on-line evaluation dataset is formed by eight different events that occurred in England between December 2016 and October 2017. For each event we considered the full-day in which they occurred. The main goals of this evaluation is to know the capacity of our method to detect emergency situations and discard those non-related to emergency events that involve location references. Geographic spread analysis is used to evaluate our method because decrease the number of false positives detection. In the same way of the experiments in Section \ref{sssec:geospreadanalysis}, we compare the results using the two presented methods respect to the number of metadata-levels by country hierarchy.
+
+As can be noted on Table \ref{tab:online1} and Table \ref{tab:online2}, we study three terrorist attacks and five high-impact real-world events related to soccer matches, music concerts and political elections. \textcolor{red}{In the case of the terrorist attacks, we study this type of events since that according to \citeauthor{carr1932disaster} \cite{carr1932disaster}, these crisis are identified as \textit{instantaneous-focalized} events, where an unexpected event affects to the community but in a reduced area. Unlike to earthquakes (identified as \textit{instantaneous-diffused} events), we study the capacity of our classifier to detect another type of event where the number of affected people are smaller than earthquakes, tsunami, and others \textit{instantaneous-focalized} events}.
+
+For \textit{Premier League Soccer Matches} and \textit{U.K Elections}, we can not identify the beginning of the event, since in the first one there are many soccer matches during the analyzed day and in the second one there is no a specific start time. In order to know the topics when our method detects an event, we computed the Top 3 Bigrams in the detected time-windows. Also, we calculate the delay time for emergency events since the beginning of the event until the first detection.
 
 On the one hand, the first evaluation \textit{Country(2)-State with G.S.} has full detection of the terrorist attacks with average delay time equal to $30.3$ minutes. These detections are related to the event given that the bigrams represent terms associated with crisis situations. However, the \textit{London Terrorist Attack} has $50\%$ of the detected time-windows after the event, which means that there are seven time-windows non-related to emergency situations. Besides the crisis situations analysis, we also study the number of detected time-windows in non-related to emergency situation events. In the same way, we have a large amount of misclassified time-windows that do not represent crisis situations as we can see in the Top 3 Bigrams for each non-related to event.
-
 
 
 On the other hand, the second evaluation \textit{Country(3)-State with G.S.} decreases the number non-related to emergency situations events detected as crisis situations. We can see three time-windows in two events detected as emergency situations (\textit{England vs Slovenia}, and \textit{Metallica Live in London}). In these cases, the time-windows are detected before the event and corresponding a non emergency situations according to the bigrams. Furthermore, when we analyzed the number of the detected emergency situations, two-thirds ($66\%$) of the events are detected correctly with average delay time equal to $30.3$ minutes. In the case of \textit{London Terrorist Attack}, our method detects one time-window before the event but the bigrams describe that the detections do not correspond to crisis situations.
 
 %Unlike to  \textit{Country(2)-State with G.S} method, \textit{Country(3)-State with G.S} method decreases the number of detection by time-windows given that latter is stricter than the first one respect to the number of country detection by metadata-level.
+
+
 
 
 \begin{figure}
@@ -476,7 +502,7 @@ On the other hand, the second evaluation \textit{Country(3)-State with G.S.} dec
 
 \section{Discussion}
 
-Our findings suggest that there is evidence to detect an emergency situation based on anomaly frequency of messages that contain locations for a specific country. Indeed, our method based on the number of metadata-levels by country hierarchy and geographic spread by state, detects a $80\%$ of the events related to emergency situations as we could demonstrate in our ground truth. Also, our method is independent of the textual features because we apply the model over different languages as Spanish, Italian and English. Furthermore, we test our model in different types of events such as earthquakes (EQ) and terrorist attacks (TA), and also on different magnitudes (in the case of earthquakes) and number of affected people (e.g., \textit{Manchester Terrorist Attack} vs \textit{Westminster Terrorist Attack}).
+Our findings suggest that there is evidence to detect an emergency situation based on anomaly frequency of messages that contain locations for a specific country. Indeed, our method based on the number of metadata-levels by country hierarchy and geographic spread by state, detects a $80\%$ of the events related to emergency situations as we could demonstrate in our ground truth. Also, our method is independent of the textual features because we apply the model over different languages as Spanish, Italian and English. Furthermore, we test our model in different types of crisis events such as earthquakes (EQ) and terrorist attacks (TA), \textcolor{red}{ where these are identified in the literature as \textit{instantaneous-diffused} and \textit{instantaneous-focalized} events respectively}. Also, we apply our methodology on different magnitudes (in the case of earthquakes) and number of affected people (e.g., \textit{Manchester Terrorist Attack} vs \textit{Westminster Terrorist Attack}).
 
 However, when we apply our method in the on-line evaluation, we detect $66\%$ of the emergency situations that affected England. This explains that the signals, and for various reasons: the number of active users in United Kingdom\footnote{http://www.statista.com/statistics/242606/number-of-active-twitter-users-in-selected-countries/ visited on January 2018} which can affect the anomaly frequency of the messages since there exists a high daily average activity of the messages; similar locations in other countries (York $\approx$ New York); and soccer teams with names of cities (Manchester United, Liverpool). These issues also can affect the number of false positive detection in which in the case of England was $30\%$ of the non-related to emergency events.
 
@@ -492,10 +518,9 @@ In this paper we have presented a methodology for detecting an emergency situati
 
 There are many things that can improve our results. We will add Point of Interest to our gazetteer tree to increase the frequency by time-windows in each hierarchy. Furthermore, we will add more non-textual features as number of retweets and tweets, unique locations detected and special locations. We also plan to study the relevance of the different metadata-levels and assign weights for each. Finally, we will create a web application to visualize events in real-time.
 
-%\begin{acks}
-	
-%\end{acks}
-
+\begin{acks}
+This work has been partially funded by the Millennium Institute for Foundational Research on Data and FONDECYT 1170218.	
+\end{acks}
 
 
 \bibliographystyle{ACM-Reference-Format}
